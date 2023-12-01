@@ -19,7 +19,7 @@ export default class GotService {
     }
     async getCharacter(id) {
         const character = await this.getResource(`/characters/${id}`);    
-        return this._transformCharacter;
+        return this._transformCharacter(character);
     }
 
     getAllBooks() {

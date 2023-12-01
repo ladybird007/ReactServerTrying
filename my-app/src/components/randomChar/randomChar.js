@@ -15,7 +15,7 @@ export default class RandomChar extends Component {
     }
 
     onCharLoaded = (char) => {
-        this.setState({char});
+        this.setState(char);
     }
 
     updateChar() {
