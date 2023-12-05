@@ -9,10 +9,11 @@ import CharDetails from '../charDetails';
 
 export default class App extends Component {
     state = {
-        randomChar: true
+        randomChar: true,
+        selectedChar: 130
     }
 
-    toggleButton = () => {
+    toggleRandomChar = () => {
         this.setState({randomChar: !this.state.randomChar})
         /* if (this.state.randomChar) {
             this.setState({
@@ -22,13 +23,19 @@ export default class App extends Component {
             this.setState({
                 randomChar: true
             });
-        } */
+        } */ 
+    }
+
+    onCharSelected = (id) => {
+        this.setState({
+            selectedChar: id
+        })
     }
 
     render() {
         const {randomChar} = this.state;
         const activeClass = randomChar ? 'primary' : 'outline-primary'; 
-        const content = randomChar ? <RandomChar/> : null;
+        const char = randomChar ? <RandomChar/> : null;
         return (
             <> 
                 <Container>
@@ -37,16 +44,16 @@ export default class App extends Component {
                 <Container>
                     <Row>
                         <Col lg={{size: 5, offset: 0}} className='mb-4'>
-                            {content}
-                            <Button variant={activeClass} onClick={()=>this.toggleButton()}>Toggle</Button>
+                            {char}
+                            <Button variant={activeClass} onClick={()=>this.toggleRandomChar()}>Toggle</Button>
                         </Col>
                     </Row>
                     <Row>
                         <Col md='6'>
-                            <ItemList />
+                            <ItemList onCharSelected={this.onCharSelected} />
                         </Col>
                         <Col md='6'>
-                            <CharDetails />
+                            <CharDetails charId={this.state.selectedChar} />
                         </Col>
                     </Row>
                 </Container>
