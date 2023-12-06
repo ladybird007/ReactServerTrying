@@ -3,21 +3,28 @@ import {Col, Row, Container} from 'reactstrap';
 import Button from 'react-bootstrap/Button';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import ErrorMessage from '../error';
+import CharacterPage from '../characterPage';
 
 
 export default class App extends Component {
     state = {
         randomChar: true,
-        selectedChar: 130
+        error: false
+    }
+
+    componentDidCatch() {
+        console.log('error');
+        this.setState({
+            error: true
+        })
     }
 
     toggleRandomChar = () => {
         this.setState({randomChar: !this.state.randomChar})
         /* if (this.state.randomChar) {
             this.setState({
-                randomChar: false
+                rand omChar: false
             });
         } else {
             this.setState({
@@ -26,16 +33,15 @@ export default class App extends Component {
         } */ 
     }
 
-    onCharSelected = (id) => {
-        this.setState({
-            selectedChar: id
-        })
-    }
-
     render() {
         const {randomChar} = this.state;
         const activeClass = randomChar ? 'primary' : 'outline-primary'; 
         const char = randomChar ? <RandomChar/> : null;
+
+        if (this.state.error) {
+            return <ErrorMessage/>
+        }
+
         return (
             <> 
                 <Container>
@@ -48,14 +54,7 @@ export default class App extends Component {
                             <Button variant={activeClass} onClick={()=>this.toggleRandomChar()}>Toggle</Button>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col md='6'>
-                            <ItemList onCharSelected={this.onCharSelected} />
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails charId={this.state.selectedChar} />
-                        </Col>
-                    </Row>
+                    <CharacterPage/>
                 </Container>
             </>
         );
