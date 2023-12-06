@@ -36,7 +36,8 @@ export default class HousePage extends Component {
                 <Col md='6' className='mb-4'>
                     <ItemList 
                         onCharSelected={this.onCharSelected}
-                        getData={this.gotService.getAllHouses} />
+                        getData={this.gotService.getAllHouses}
+                        renderItem={(item) => `${item.name}`} />
                 </Col>
                 <Col md='6' className='mb-4'>
                     <CharDetails charId={this.state.selectedChar} />
