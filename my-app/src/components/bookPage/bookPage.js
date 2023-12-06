@@ -13,7 +13,7 @@ export default class BookPage extends Component {
         error: false
     }
 
-    onCharSelected = (id) => {
+    onItemSelected = (id) => {
         this.setState({
             selectedChar: id
         })
@@ -35,7 +35,7 @@ export default class BookPage extends Component {
             <Row>
                 <Col md='6' className='mb-4'>
                     <ItemList 
-                        onCharSelected={this.onCharSelected}
+                        onItemSelected={this.onItemSelected}
                         getData={this.gotService.getAllBooks}
                         renderItem={(item) => `${item.name}`} />
                 </Col>

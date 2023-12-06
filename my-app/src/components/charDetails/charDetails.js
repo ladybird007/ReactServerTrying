@@ -1,6 +1,20 @@
 import React, {Component} from 'react';
 import gotService from '../../services/gotService';
 import './charDetails.css';
+
+const Field = ({item, field, label}) => {
+    return (
+        <li className="list-group-item d-flex justify-content-between">
+            <span className="term">{label}</span>
+            <span>{item[field]}</span>
+        </li>
+    )
+}
+
+export {
+    Field
+};
+
 export default class CharDetails extends Component {
 
     gotService = new gotService();
@@ -43,22 +57,7 @@ export default class CharDetails extends Component {
             <div className="char-details rounded">
                 <h4>{name}</h4>
                 <ul className="list-group list-group-flush">
-                    <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Gender</span>
-                        <span>{gender}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Born</span>
-                        <span>{born}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Died</span>
-                        <span>{died}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                        <span className="term">Culture</span>
-                        <span>{culture}</span>
-                    </li>
+                    {this.props.children}
                 </ul>
             </div>
         );
