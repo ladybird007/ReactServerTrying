@@ -1,21 +1,22 @@
 import React, {Component} from 'react';
 import {Col, Row} from 'reactstrap';
 import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import ItemDetails, {Field} from '../itemDetails';
 import ErrorMessage from '../error';
 import gotService from '../../services/gotService';
+import RowBlock from '../rowBlock';
 
 export default class HousePage extends Component {
     gotService = new gotService();
 
     state = {
+        selectedHouse: 8,
         error: false
     }
 
     onItemSelected = (id) => {
-        console.log(id);
         this.setState({
-            selectedChar: id
+            selectedHouse: id
         })
     }
 
@@ -31,18 +32,26 @@ export default class HousePage extends Component {
             return <ErrorMessage/>
         }
 
+        const itemlist = (
+            <ItemList 
+                onItemSelected={this.onItemSelected}
+                getData={this.gotService.getAllHouses}
+                renderItem={({name}) => name} />
+        );
+
+        const houseDetails = (
+            <ItemDetails 
+                itemId={this.state.selectedHouse} 
+                itemGotService={this.gotService.getHouse}>
+                <Field field='region' label='Region' />
+                <Field field='words' label='Words' />
+                <Field field='overlord' label='Overlord' />
+                <Field field='ancestralWeapons' label='Ancestral Weapons' />
+            </ItemDetails>
+        )
+
         return (
-            <Row>
-                <Col md='6' className='mb-4'>
-                    <ItemList 
-                        onItemSelected={this.onItemSelected}
-                        getData={this.gotService.getAllHouses}
-                        renderItem={(item) => `${item.name}`} />
-                </Col>
-                <Col md='6' className='mb-4'>
-                    <CharDetails charId={this.state.selectedChar} />
-                </Col>
-            </Row>
+            <RowBlock left={itemlist} right={houseDetails}/>
         )
     }
 }

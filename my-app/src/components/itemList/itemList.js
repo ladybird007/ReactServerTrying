@@ -8,7 +8,9 @@ export default class ItemList extends Component {
     }
 
     componentDidMount() {
-        const {getData} = this.props; 
+        const {getData} = this.props;
+
+        console.log(getData);
 
         getData()
             .then( (itemList) => {
