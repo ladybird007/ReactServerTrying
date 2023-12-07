@@ -51,7 +51,7 @@ export default class App extends Component {
                 </Container>
                 <Container>
                     <Row>
-                        <Col lg={{size: 5, offset: 0}} className='mb-4'>
+                        <Col lg={{size: 12, offset: 0}} className='mb-4'>
                             {char}
                             <Button variant={activeClass} onClick={()=>this.toggleRandomChar()}>Toggle</Button>
                         </Col>
