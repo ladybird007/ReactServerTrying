@@ -39,9 +39,11 @@ export default class CharacterPage extends Component {
         );
 
         const charDetails = (
-            <CharDetails charId={this.state.selectedChar}>
+            <CharDetails itemId={this.state.selectedChar}>
                 <Field field='gender' label='Gender' />
                 <Field field='born' label='Born' />
+                <Field field='died' label='Died' />
+                <Field field='culture' label='Culture' />
             </CharDetails>
         )
 

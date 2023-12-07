@@ -13,6 +13,7 @@ export default class HousePage extends Component {
     }
 
     onItemSelected = (id) => {
+        console.log(id);
         this.setState({
             selectedChar: id
         })

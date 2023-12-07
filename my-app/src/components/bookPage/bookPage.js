@@ -1,20 +1,21 @@
 import React, {Component} from 'react';
-import {Col, Row} from 'reactstrap';
 import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import CharDetails, {Field} from '../charDetails';
 import ErrorMessage from '../error';
 import gotService from '../../services/gotService';
+import RowBlock from '../rowBlock';
 
 export default class BookPage extends Component {
     gotService = new gotService();
 
     state = {
+        selectedBook: 70,
         error: false
     }
 
     onItemSelected = (id) => {
         this.setState({
-            selectedChar: id
+            selectedBook: id
         })
     }
 
@@ -30,18 +31,23 @@ export default class BookPage extends Component {
             return <ErrorMessage/>
         }
 
+        const itemlist = (
+            <ItemList 
+                onItemSelected={this.onItemSelected}
+                getData={this.gotService.getAllBooks}
+                renderItem={(name) => name} />
+        );
+
+        const bookDetails = (
+            <CharDetails itemId={this.state.selectedBook}>
+                <Field field='numberOfPages' label='Number of pages' />
+                <Field field='publiser' label='Publiser' />
+                <Field field='released' label='Released' />
+            </CharDetails>
+        )
+
         return (
-            <Row>
-                <Col md='6' className='mb-4'>
-                    <ItemList 
-                        onItemSelected={this.onItemSelected}
-                        getData={this.gotService.getAllBooks}
-                        renderItem={(item) => `${item.name}`} />
-                </Col>
-                <Col md='6' className='mb-4'>
-                    <CharDetails charId={this.state.selectedChar} />
-                </Col>
-            </Row>
+            <RowBlock left={itemlist} right={bookDetails}/> 
         )
     }
 }

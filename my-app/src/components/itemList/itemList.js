@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import gotService from '../../services/gotService';
 import './itemList.css';
 import Spinner from '../spinner';
 export default class ItemList extends Component {
-
-    gotService = new gotService();
 
     state = {
         itemList: null
