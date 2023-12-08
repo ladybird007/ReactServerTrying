@@ -7,7 +7,30 @@ import ErrorMessage from '../error';
 import CharacterPage from '../characterPage';
 import BookPage from '../bookPage';
 import HousePage from '../housePage';
+import {createBrowserRouter, RouterProvider, BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: ""
+    },
+    {
+        path: "/characters",
+        element: <CharacterPage/>,
+    },
+    {
+        path: "/books",
+        element: <BookPage/>,
+    },
+    {
+        path: "/houses",
+        element: <HousePage/>,
+    },
+    {
+        path: "*",
+        element: <ErrorMessage/>,
+    },
+]);
 
 export default class App extends Component {
     state = {
@@ -24,15 +47,6 @@ export default class App extends Component {
 
     toggleRandomChar = () => {
         this.setState({randomChar: !this.state.randomChar})
-        /* if (this.state.randomChar) {
-            this.setState({
-                rand omChar: false
-            });
-        } else {
-            this.setState({
-                randomChar: true
-            });
-        } */ 
     }
 
     render() {
@@ -45,22 +59,23 @@ export default class App extends Component {
         }
 
         return (
-            <> 
-                <Container>
-                    <Header />
-                </Container>
-                <Container>
-                    <Row>
-                        <Col lg={{size: 12, offset: 0}} className='mb-4'>
-                            {char}
-                            <Button variant={activeClass} onClick={()=>this.toggleRandomChar()}>Toggle</Button>
-                        </Col>
-                    </Row>
-                    <CharacterPage/>
-                    <BookPage/>
-                    <HousePage/>
-                </Container>
-            </>
+            <Router>
+                <div className="app">
+                    <Container>
+                        <Header />
+                    </Container>
+                    <Container>
+                        <Row>
+                            <Col lg={{size: 12, offset: 0}} className='mb-4'>
+                                {char}
+                                <Button variant={activeClass} onClick={()=>this.toggleRandomChar()}>Toggle</Button>
+                            </Col>
+                        </Row>
+                        
+                        <RouterProvider router={router} />
+                    </Container>
+                </div>
+            </Router>
         );
     }
     
