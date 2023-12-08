@@ -7,30 +7,7 @@ import ErrorMessage from '../error';
 import CharacterPage from '../characterPage';
 import BookPage from '../bookPage';
 import HousePage from '../housePage';
-import {createBrowserRouter, RouterProvider, BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: ""
-    },
-    {
-        path: "/characters",
-        element: <CharacterPage/>,
-    },
-    {
-        path: "/books",
-        element: <BookPage/>,
-    },
-    {
-        path: "/houses",
-        element: <HousePage/>,
-    },
-    {
-        path: "*",
-        element: <ErrorMessage/>,
-    },
-]);
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 export default class App extends Component {
     state = {
@@ -71,8 +48,13 @@ export default class App extends Component {
                                 <Button variant={activeClass} onClick={()=>this.toggleRandomChar()}>Toggle</Button>
                             </Col>
                         </Row>
-                        
-                        <RouterProvider router={router} />
+                        <Routes>
+                            <Route path="/">
+                                <Route path="/characters" element={<CharacterPage/>} />
+                                <Route path="/houses" element={<HousePage/>} />
+                                <Route path="/books" element={<BookPage/>} />
+                            </Route>
+                        </Routes>
                     </Container>
                 </div>
             </Router>
