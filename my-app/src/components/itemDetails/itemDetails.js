@@ -39,8 +39,6 @@ export default class ItemDetails extends Component {
             return;
         }
 
-        console.log(itemGotService(itemId));
-
         itemGotService(itemId)
             .then((item) => {
                 this.setState({item})
