@@ -4,10 +4,9 @@ import Button from 'react-bootstrap/Button';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../error';
-import CharacterPage from '../characterPage';
-import BookPage from '../bookPage';
-import HousePage from '../housePage';
+import {BookPage, BookItem, CharacterPage, HousePage} from '../pages';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import './app.css'
 
 export default class App extends Component {
     state = {
@@ -53,6 +52,7 @@ export default class App extends Component {
                                 <Route path="/characters" element={<CharacterPage/>} />
                                 <Route path="/houses" element={<HousePage/>} />
                                 <Route path="/books" element={<BookPage/>} />
+                                <Route path="/books/:id/" element={<BookItem/>} />
                             </Route>
                         </Routes>
                     </Container>
