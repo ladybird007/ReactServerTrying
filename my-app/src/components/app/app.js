@@ -25,6 +25,12 @@ export default class App extends Component {
         this.setState({randomChar: !this.state.randomChar})
     }
 
+    BookItem = ({match, location, history}) => {
+        console.log(match);
+        console.log(location);
+        console.log(history);
+    }
+
     render() {
         const {randomChar} = this.state;
         const activeClass = randomChar ? 'primary' : 'outline-primary'; 
@@ -33,6 +39,8 @@ export default class App extends Component {
         if (this.state.error) {
             return <ErrorMessage/>
         }
+
+        
 
         return (
             <Router>
@@ -52,7 +60,7 @@ export default class App extends Component {
                                 <Route path="/characters" element={<CharacterPage/>} />
                                 <Route path="/houses" element={<HousePage/>} />
                                 <Route path="/books" element={<BookPage/>} />
-                                <Route path="/books/:id/" element={<BookItem/>} />
+                                <Route path="/books/:id?" element={<BookItem/>} />
                             </Route>
                         </Routes>
                     </Container>
