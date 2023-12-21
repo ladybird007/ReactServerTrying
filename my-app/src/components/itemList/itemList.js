@@ -2,22 +2,9 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import './itemList.css';
 import Spinner from '../spinner';
-export default class ItemList extends Component {
+import gotService from '../../services/gotService';
 
-    state = {
-      itemList: null,
-    }
-
-    componentDidMount() {
-      const {getData} = this.props;
-
-      getData()
-        .then( (itemList) => {
-            this.setState({
-                itemList
-            })
-        })
-    }
+class ItemList extends Component {
 
     renderItems(arr) {
       const {onClickState} = this.props;
@@ -39,18 +26,44 @@ export default class ItemList extends Component {
     }
 
     render() {
-        const {itemList} = this.state;
+        
+      const {data} = this.props;
+      const items = this.renderItems(data);
 
-        if(!itemList) {
-            return <Spinner/>
-        }
-
-        const items = this.renderItems(itemList);
-
-        return (
-            <ul className="item-list list-group">
-                {items}
-            </ul>
-        );
+      return (
+          <ul className="item-list list-group">
+              {items}
+          </ul>
+      );
     }
 }
+
+const withData = (View, getData) => {
+  return class extends Component {
+    state = {
+      data: null
+    }
+  
+    componentDidMount() {
+  
+      getData()
+        .then( (data) => {
+            this.setState({
+                data
+            })
+        })
+    }
+  
+    render() {
+      const {data} = this.state;
+  
+      if(!data) {
+          return <Spinner/>
+      }
+      return <View {...this.props} data={data} />
+    }
+  }
+}
+
+const {getAllCharacters} = new gotService();
+export default withData(ItemList, getAllCharacters);
