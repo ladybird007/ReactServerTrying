@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import ItemList from '../itemList';
-import ItemDetails, {Field} from '../itemDetails';
 import ErrorMessage from '../error';
 import gotService from '../../services/gotService';
-import RowBlock from '../rowBlock';
 
 export default class BookPage extends Component {
     gotService = new gotService();
 
     state = {
         selectedBook: 5,
-        error: false
+        error: false,
+        onClick: false
     }
 
     onItemSelected = (id) => {
@@ -27,29 +26,18 @@ export default class BookPage extends Component {
 
     render() {
 
+        const {onClick} = this.state; 
+
         if (this.state.error) {
             return <ErrorMessage/>
         }
 
-        const itemlist = (
+        return (
             <ItemList 
                 onItemSelected={this.onItemSelected}
                 getData={this.gotService.getAllBooks}
+                onClickState={onClick}
                 renderItem={({name}) => name} />
-        );
-
-        const bookDetails = (
-            <ItemDetails 
-                itemId={this.state.selectedBook} 
-                itemGotService={this.gotService.getBook}>
-                <Field field='numberOfPages' label='Number of pages' />
-                <Field field='publiser' label='Publiser' />
-                <Field field='released' label='Released' />
-            </ItemDetails>
-        )
-
-        return (
-            <RowBlock left={itemlist} right={bookDetails}/> 
         )
     }
 }

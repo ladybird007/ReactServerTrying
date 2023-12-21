@@ -10,7 +10,8 @@ export default class CharacterPage extends Component {
 
     state = {
         selectedChar: 130,
-        error: false
+        error: false,
+        onClick: true
     }
 
     onItemSelected = (id) => {
@@ -31,10 +32,13 @@ export default class CharacterPage extends Component {
             return <ErrorMessage/>
         }
 
+        const {onClick} = this.state; 
+
         const itemlist = (
                 <ItemList 
                     onItemSelected={this.onItemSelected}
                     getData={this.gotService.getAllCharacters}
+                    onClickState={onClick}
                     renderItem={({name, gender}) => `${name} (${gender})`} />
         );
 

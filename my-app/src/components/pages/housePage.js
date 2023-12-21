@@ -10,7 +10,8 @@ export default class HousePage extends Component {
 
     state = {
         selectedHouse: 8,
-        error: false
+        error: false,
+        onClick: true
     }
 
     onItemSelected = (id) => {
@@ -31,10 +32,13 @@ export default class HousePage extends Component {
             return <ErrorMessage/>
         }
 
+        const {onClick} = this.state; 
+
         const itemlist = (
             <ItemList 
                 onItemSelected={this.onItemSelected}
                 getData={this.gotService.getAllHouses}
+                onClickState={onClick}
                 renderItem={({name}) => name} />
         );
 
