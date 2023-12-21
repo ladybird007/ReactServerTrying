@@ -6,26 +6,22 @@ import ErrorMessage from '../error';
 
 export default class RandomChar extends Component {
 
-    constructor() {
-        super();
-        console.log();
-    }
-
     gotService = new gotService();
     state = {
         char: {},
         loading: true,
         error: false
     }
+    static defaultProps = {
+        interval: 15000
+    }
 
     componentDidMount() {
-        // console.log('mounting');
         this.updateChar();
-        this.timerId = setInterval(this.updateChar, 1500);
+        this.timerId = setInterval(this.updateChar, this.props.interval);
     }
 
     componentWillUnmount() {
-        // console.log('unmounting');
         clearInterval(this.timerId);
     }
 
