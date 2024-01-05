@@ -1,23 +1,29 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './itemList.css';
 import Spinner from '../spinner';
-import gotService from '../../services/gotService';
 
-function ItemList (props) {
+function ItemList({getData, onItemSelected, renderItem, onClickState}) {
 
-    const renderItems = (arr) => {
-      const {onClickState} = props;
+  const [itemList, updateList] = useState([]);
 
+  useEffect(() => {
+    getData()
+    .then( (data) => {
+        updateList(data)
+    })
+  }, [])
+
+  function renderItems(arr) {
       return arr.map((item) => {
         const {id} = item;
-        const label = onClickState ? props.renderItem(item) : <Link to={id}>{props.renderItem(item)}</Link> ;
+        const label = onClickState ? renderItem(item) : <Link to={id}>{renderItem(item)}</Link> ;
 
         return (
           <li 
               key={id}
               className="list-group-item"
-              onClick={onClickState ? () => props.onItemSelected(id) : undefined }
+              onClick={onClickState ? () => onItemSelected(id) : undefined }
           >
             {label}
           </li>
@@ -25,43 +31,16 @@ function ItemList (props) {
       });
     }
 
-        
-    const {data} = props;
-    const items = renderItems(data);
+    if(!itemList) {
+        return <Spinner/>
+    }
+
+    const items = renderItems(itemList);
 
     return (
-      <ul className="item-list list-group">
-          {items}
-      </ul>
+        <ul className="item-list list-group">
+            {items}
+        </ul>
     );
 }
-
-const withData = (View, getData) => {
-  return class extends Component {
-    state = {
-      data: null
-    }
-  
-    componentDidMount() {
-  
-      getData()
-        .then( (data) => {
-            this.setState({
-                data
-            })
-        })
-    }
-  
-    render() {
-      const {data} = this.state;
-  
-      if(!data) {
-          return <Spinner/>
-      }
-      return <View {...this.props} data={data} />
-    }
-  }
-}
-
-const {getAllCharacters} = new gotService();
-export default withData(ItemList, getAllCharacters);
+export default ItemList;
