@@ -7,15 +7,8 @@ export default class BookPage extends Component {
     gotService = new gotService();
 
     state = {
-        selectedBook: 5,
         error: false,
         onClick: false
-    }
-
-    onItemSelected = (id) => {
-        this.setState({
-            selectedBook: id
-        })
     }
 
     componentDidCatch() {
@@ -34,7 +27,6 @@ export default class BookPage extends Component {
 
         return (
             <ItemList 
-                onItemSelected={this.onItemSelected}
                 getData={this.gotService.getAllBooks}
                 onClickState={onClick}
                 renderItem={({name}) => name} />

@@ -4,20 +4,20 @@ import './itemList.css';
 import Spinner from '../spinner';
 import gotService from '../../services/gotService';
 
-class ItemList extends Component {
+function ItemList (props) {
 
-    renderItems(arr) {
-      const {onClickState} = this.props;
+    const renderItems = (arr) => {
+      const {onClickState} = props;
 
       return arr.map((item) => {
         const {id} = item;
-        const label = onClickState ? this.props.renderItem(item) : <Link to={id}>{this.props.renderItem(item)}</Link> ;
+        const label = onClickState ? props.renderItem(item) : <Link to={id}>{props.renderItem(item)}</Link> ;
 
         return (
           <li 
               key={id}
               className="list-group-item"
-              onClick={onClickState ? () => this.props.onItemSelected(id) : undefined }
+              onClick={onClickState ? () => props.onItemSelected(id) : undefined }
           >
             {label}
           </li>
@@ -25,17 +25,15 @@ class ItemList extends Component {
       });
     }
 
-    render() {
         
-      const {data} = this.props;
-      const items = this.renderItems(data);
+    const {data} = props;
+    const items = renderItems(data);
 
-      return (
-          <ul className="item-list list-group">
-              {items}
-          </ul>
-      );
-    }
+    return (
+      <ul className="item-list list-group">
+          {items}
+      </ul>
+    );
 }
 
 const withData = (View, getData) => {
